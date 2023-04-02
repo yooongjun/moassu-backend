@@ -15,5 +15,5 @@ out/
 !**/src/test/**/out/
 
 ### 민감 정보 ###
-application.properties
+application-db.properties
 

@@ -4,6 +4,8 @@
 
 **사용 기술**:  JAVA(17), SpringBoot(3.0.5), MySql, JPA
 
+<br/><br/>
+
 ## Commit 메시지 규칙
 - feat: 첫 구현
 - fix: 이후 수정

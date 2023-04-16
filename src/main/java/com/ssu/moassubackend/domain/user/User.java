@@ -34,4 +34,24 @@ public class User extends BaseEntity {
         this.name = name;
     }
 
+    // 이메일 수정 메서드 추가
+    public User changeEmail(String email) {
+
+        if (!email.isEmpty())
+            this.email = email;
+
+        return this;
+    }
+
+    // 이름 수정 메서드 추가
+    public User changeName(String name) {
+
+        if (!name.isEmpty()) {
+            this.name = name;
+        }
+
+        return this;
+    }
+
+
 }

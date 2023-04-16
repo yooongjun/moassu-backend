@@ -3,9 +3,12 @@ package com.ssu.moassubackend.domain.subscription;
 import com.ssu.moassubackend.domain.department.Department;
 import com.ssu.moassubackend.domain.user.User;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 public class Subscription {

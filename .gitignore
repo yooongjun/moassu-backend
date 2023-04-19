@@ -16,4 +16,6 @@ out/
 
 ### 민감 정보 ###
 application-db.properties
+application-oauth.yml
+
 

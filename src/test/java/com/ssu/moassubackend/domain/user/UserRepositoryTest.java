@@ -26,7 +26,7 @@ class UserRepositoryTest {
 
         User savedUser = userRepository.save(user);
 
-        assertThat(user.getName()).isEqualTo(savedUser.getName());
+        assertThat(user.getNickName()).isEqualTo(savedUser.getNickName());
         assertThat(user.getEmail()).isEqualTo(savedUser.getEmail());
     }
 
@@ -38,7 +38,7 @@ class UserRepositoryTest {
         User findUser = userRepository.findById(user.getId()).get();
 
         assertThat(findUser.getEmail()).isEqualTo(user.getEmail());
-        assertThat(findUser.getName()).isEqualTo(user.getName());
+        assertThat(findUser.getNickName()).isEqualTo(user.getNickName());
     }
 
     @Test

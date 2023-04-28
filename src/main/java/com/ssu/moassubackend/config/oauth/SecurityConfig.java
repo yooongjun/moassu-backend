@@ -62,7 +62,7 @@ public class SecurityConfig{
     // WebSecurity 설정
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/");
+        return (web) -> web.ignoring().requestMatchers("**");
     }
 
 

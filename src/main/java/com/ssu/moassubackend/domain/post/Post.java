@@ -24,7 +24,8 @@ public abstract class Post {
 
     private String field; // 분야
 
-    private String status; // 진행 상태
+    @Enumerated(value = EnumType.STRING)
+    private Status status; // 진행 상태
 
 
 }

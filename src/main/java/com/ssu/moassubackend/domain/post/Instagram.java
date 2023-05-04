@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Getter
 public class Instagram extends Post {
 
-    private LocalDate recruit_start_date;
-    private LocalDate recruit_end_date;
+    private String thumbnail;
 
 }

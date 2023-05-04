@@ -1,5 +1,6 @@
 package com.ssu.moassubackend.domain.user;
 
+import com.ssu.moassubackend.domain.comment.Comment;
 import com.ssu.moassubackend.domain.common.BaseEntity;
 import com.ssu.moassubackend.domain.subscription.Subscription;
 import jakarta.persistence.*;
@@ -35,6 +36,9 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user")
     private List<Subscription> subscriptions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)

@@ -1,5 +1,6 @@
 package com.ssu.moassubackend.config.oauth.dto;
 
+import com.ssu.moassubackend.config.oauth.SocialType;
 import com.ssu.moassubackend.domain.user.Role;
 import com.ssu.moassubackend.domain.user.User;
 import lombok.Builder;
@@ -18,13 +19,16 @@ public class OAuthAttributes {
     private String nickName;    // 닉네임 정보
     private String email;       // 이메일 주소
 
+    private SocialType socialType;
+
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey,String oAuthId, String nickName, String email) {
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey,String oAuthId, String nickName, String email, SocialType socialType) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.oAuthId = oAuthId;
         this.nickName = nickName;
         this.email = email;
+        this.socialType = socialType;
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
@@ -48,6 +52,7 @@ public class OAuthAttributes {
                 .email(email)
                 .nickName(nickName)
                 .attributes(attributes)
+                .socialType(SocialType.GOOGLE)
                 .build();
     }
 
@@ -67,9 +72,10 @@ public class OAuthAttributes {
                 .email(email)
                 .nickName(nickname)
                 .attributes(attributes)
+                .socialType(SocialType.KAKAO)
                 .build();
     }
-    
+
     // DTO(OAuthAttributes)를 엔티티로 변환하는 메서드
     public User toEntity(OAuthAttributes attributes) {
 
@@ -78,6 +84,7 @@ public class OAuthAttributes {
                 .email(attributes.getEmail())
                 .nickName(attributes.getNickName())
                 .role(Role.USER)
+                .socialType(attributes.getSocialType())
                 .build();
     }
 

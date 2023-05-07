@@ -1,6 +1,7 @@
 package com.ssu.moassubackend.domain.user;
 
 import com.ssu.moassubackend.domain.comment.Comment;
+import com.ssu.moassubackend.config.oauth.SocialType;
 import com.ssu.moassubackend.domain.common.BaseEntity;
 import com.ssu.moassubackend.domain.subscription.Subscription;
 import jakarta.persistence.*;
@@ -18,7 +19,7 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
+public class User extends BaseEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -44,12 +45,16 @@ public class User extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType;
+
     @Builder
-    public User(String oAuthId,String email, String nickName, Role role) {
+    public User(String oAuthId, String email, String nickName, Role role, SocialType socialType) {
         this.oAuthId = oAuthId;
         this.email = email;
         this.nickName = nickName;
         this.role = role;
+        this.socialType = socialType;
     }
 
     public User update(String nickName, String email) {
@@ -67,8 +72,8 @@ public class User extends BaseEntity {
         this.email = email;
         this.nickName = nickName;
     }
-    // 이메일 수정 메서드 추가
 
+    // 이메일 수정 메서드 추가
     public User changeEmail(String email) {
 
         if (!email.isEmpty())
@@ -76,8 +81,8 @@ public class User extends BaseEntity {
 
         return this;
     }
-    // 이름 수정 메서드 추가
 
+    // 이름 수정 메서드 추가
     public User changeName(String name) {
 
         if (!name.isEmpty()) {

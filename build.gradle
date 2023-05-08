@@ -38,6 +38,9 @@ dependencies {
 	implementation group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.1.1.RELEASE'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
+	// https://mvnrepository.com/artifact/org.python/jython
+	implementation group: 'org.python', name: 'jython', version: '2.7.3'
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

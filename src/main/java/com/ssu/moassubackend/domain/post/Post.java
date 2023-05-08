@@ -2,12 +2,14 @@ package com.ssu.moassubackend.domain.post;
 
 import com.ssu.moassubackend.domain.comment.Comment;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
@@ -32,5 +34,12 @@ public abstract class Post {
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
+
+    public Post(String title, String content, LocalDateTime write_date, String field) {
+        this.title = title;
+        this.content = content;
+        this.write_date = write_date;
+        this.field = field;
+    }
 
 }

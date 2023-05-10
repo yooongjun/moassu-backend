@@ -9,6 +9,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +28,7 @@ public class JwtTokenProvider {
     private final UserDetailsService userDetailsService;
     private final String OAUTH2_ACCESS_TOKEN_HEADER = "access_token";
 
-//    @Value(value = "${secret.jwt.key}")
+    @Value(value = "${secret.jwt.key}")
     private String secretKey="secretKey";
     private final long tokenValidMillisecond = 1000 * 60 * 60;
 

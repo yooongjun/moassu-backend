@@ -1,6 +1,12 @@
 package com.ssu.moassubackend.config.oauth.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssu.moassubackend.config.oauth.SocialType;
+import com.ssu.moassubackend.config.oauth.dto.OAuthAttributes;
+import com.ssu.moassubackend.config.oauth.dto.OauthToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -11,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -22,17 +30,24 @@ public class OAuth2TokenService {
     @Value("${secret.kakao.redirect.uri}")
     private String KAKAO_REDIRECT_URI;
 
-    public String getAccessToken(String authorizationCode, SocialType socialType) {
+    // authorization code로 access token을 발급받고, 사용자 정보를 반환하는 메서드
+    public OAuthAttributes getUserInfo(String authorizationCode, SocialType socialType) {
 
         if (authorizationCode != null && socialType.equals(SocialType.KAKAO)) {
-            return getKakaoAccessToken(authorizationCode);
+
+            // get access token
+            OauthToken oauthToken = getKakaoAccessToken(authorizationCode);
+            // get User Information
+            OAuthAttributes oAuthAttributes = loadKakao(oauthToken.getAccess_token(), oauthToken.getRefresh_token());
+            return oAuthAttributes;
         }
 
         return null;
     }
 
+    // KAKAO REST API로 access token을
+    public OauthToken getKakaoAccessToken(String authorizationCode)  {
 
-    public String getKakaoAccessToken(String authorizationCode) {
         // Set URI
         URI uri = UriComponentsBuilder
                 .fromUriString("https://kauth.kakao.com")
@@ -58,9 +73,56 @@ public class OAuth2TokenService {
         // Set http entity
         RequestEntity<MultiValueMap<String, String>> requestEntity = RequestEntity.post(uri).headers(headers).body(params);
 
+        // 토큰 받기
         ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
 
-        return responseEntity.getBody();
+        // JSON String to OauthToken
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        OauthToken oauthToken;
+
+        try {
+            oauthToken = objectMapper.readValue(responseEntity.getBody(), OauthToken.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return oauthToken;
+    }
+
+    public OAuthAttributes loadKakao(String accessToken, String refreshToken) {
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Set URI
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://kapi.kakao.com")
+                .path("/v2/user/me")
+                .encode()
+                .build()
+                .toUri();
+
+        // Set headers
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add("Authorization", "Bearer " + accessToken);
+
+        // Set http entity
+        RequestEntity<MultiValueMap<String, String>> requestEntity = new RequestEntity<>(headers, HttpMethod.GET, uri);
+
+        // 유저 정보 불러오기
+        ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
+
+        // JSON String to Object
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> attributes;
+
+        try {
+            attributes = objectMapper.readValue(responseEntity.getBody(), HashMap.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return OAuthAttributes.of(SocialType.KAKAO, "", attributes);
     }
 
 }

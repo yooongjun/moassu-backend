@@ -14,26 +14,23 @@ import java.util.Map;
 @Getter
 public class OAuthAttributes {
     private Map<String, Object> attributes;
-    private String nameAttributeKey;
     private String oAuthId;     // OAuth2.0에서 사용하는 PK
     private String nickName;    // 닉네임 정보
     private String email;       // 이메일 주소
-
     private SocialType socialType;
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey,String oAuthId, String nickName, String email, SocialType socialType) {
+    public OAuthAttributes(Map<String, Object> attributes, String oAuthId, String nickName, String email, SocialType socialType) {
         this.attributes = attributes;
-        this.nameAttributeKey = nameAttributeKey;
         this.oAuthId = oAuthId;
         this.nickName = nickName;
         this.email = email;
         this.socialType = socialType;
     }
 
-    public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+    public static OAuthAttributes of(SocialType socialType, String userNameAttributeName, Map<String, Object> attributes) {
 
-        if ("kakao".equals(registrationId)) {
+        if (socialType.equals(SocialType.KAKAO)) {
             return ofKakao("id", attributes);
         }
 
@@ -48,7 +45,6 @@ public class OAuthAttributes {
 
         return OAuthAttributes.builder()
                 .oAuthId(oAuthId)
-                .nameAttributeKey(userNameAttributeName)
                 .email(email)
                 .nickName(nickName)
                 .attributes(attributes)
@@ -68,7 +64,6 @@ public class OAuthAttributes {
 
         return OAuthAttributes.builder()
                 .oAuthId(oAuthId)
-                .nameAttributeKey(userNameAttributeName)
                 .email(email)
                 .nickName(nickname)
                 .attributes(attributes)

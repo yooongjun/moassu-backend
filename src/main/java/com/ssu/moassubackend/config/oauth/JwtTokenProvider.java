@@ -26,7 +26,7 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
-    private final String OAUTH2_ACCESS_TOKEN_HEADER = "access_token";
+    private final String JWT_TOKEN_HEADER = "m-auth-token";
 
     @Value(value = "${secret.jwt.key}")
     private String secretKey="secretKey";
@@ -61,7 +61,7 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader(OAUTH2_ACCESS_TOKEN_HEADER);
+        return request.getHeader(JWT_TOKEN_HEADER);
     }
 
     public boolean validateToken(String token) {

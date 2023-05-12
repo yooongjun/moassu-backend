@@ -72,14 +72,14 @@ public class OAuthAttributes {
     }
 
     // DTO(OAuthAttributes)를 엔티티로 변환하는 메서드
-    public User toEntity(OAuthAttributes attributes) {
+    public User toEntity() {
 
         return User.builder()
-                .oAuthId(attributes.getOAuthId())
-                .email(attributes.getEmail())
-                .nickName(attributes.getNickName())
+                .oAuthId(this.getOAuthId())
+                .email(this.getEmail())
+                .nickName(this.getNickName())
                 .role(Role.USER)
-                .socialType(attributes.getSocialType())
+                .socialType(this.getSocialType())
                 .build();
     }
 

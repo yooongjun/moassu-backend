@@ -16,6 +16,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.naming.AuthenticationException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,13 +34,15 @@ public class OAuth2TokenService {
     // authorization code로 access token을 발급받고, 사용자 정보를 반환하는 메서드
     public OAuthAttributes getUserInfo(String authorizationCode, SocialType socialType) {
 
-        if (authorizationCode != null && socialType.equals(SocialType.KAKAO)) {
+        if (socialType.equals(SocialType.KAKAO)) {
 
             // get access token
             OauthToken oauthToken = getKakaoAccessToken(authorizationCode);
+
             // get User Information
             OAuthAttributes oAuthAttributes = loadKakao(oauthToken.getAccess_token(), oauthToken.getRefresh_token());
             return oAuthAttributes;
+
         }
 
         return null;
@@ -72,9 +75,15 @@ public class OAuth2TokenService {
 
         // Set http entity
         RequestEntity<MultiValueMap<String, String>> requestEntity = RequestEntity.post(uri).headers(headers).body(params);
+        ResponseEntity<String> responseEntity;
 
-        // 토큰 받기
-        ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
+        try {
+            // 토큰 받기
+            responseEntity = restTemplate.exchange(requestEntity, String.class);
+        } catch (Exception e) {
+            log.error("[kakao] access token 발급 실패 ");
+            throw (new RuntimeException("authorization code가 잘못되었습니다."));
+        }
 
         // JSON String to OauthToken
         ObjectMapper objectMapper = new ObjectMapper();

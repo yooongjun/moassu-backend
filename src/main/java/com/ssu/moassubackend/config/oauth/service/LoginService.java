@@ -33,7 +33,7 @@ public class LoginService {
             log.info("회원가입 로직 실행");
             User user = userRepository.save(oAuthAttributes.toEntity());
             token = jwtTokenProvider.createToken(oAuthId);
-            return LoginResultDto.builder().msg("회원가입울 성공했습니다.")
+            return LoginResultDto.builder().msg("회원가입을 성공했습니다.")
                     .success(true).token(token).userName(user.getNickName()).email(user.getEmail()).build();
         } else {
             log.info("로그인 로직 실행");

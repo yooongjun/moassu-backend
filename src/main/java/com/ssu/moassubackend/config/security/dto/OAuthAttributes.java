@@ -1,6 +1,6 @@
-package com.ssu.moassubackend.config.oauth.dto;
+package com.ssu.moassubackend.config.security.dto;
 
-import com.ssu.moassubackend.config.oauth.SocialType;
+import com.ssu.moassubackend.config.security.SocialType;
 import com.ssu.moassubackend.domain.user.Role;
 import com.ssu.moassubackend.domain.user.User;
 import lombok.Builder;

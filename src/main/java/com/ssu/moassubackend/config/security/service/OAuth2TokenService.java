@@ -1,11 +1,11 @@
-package com.ssu.moassubackend.config.oauth.service;
+package com.ssu.moassubackend.config.security.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssu.moassubackend.config.oauth.SocialType;
-import com.ssu.moassubackend.config.oauth.dto.OAuthAttributes;
-import com.ssu.moassubackend.config.oauth.dto.OauthToken;
+import com.ssu.moassubackend.config.security.SocialType;
+import com.ssu.moassubackend.config.security.dto.OAuthAttributes;
+import com.ssu.moassubackend.config.security.dto.OauthToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;

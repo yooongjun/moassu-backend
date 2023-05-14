@@ -1,8 +1,8 @@
-package com.ssu.moassubackend.config.oauth.service;
+package com.ssu.moassubackend.config.security.service;
 
-import com.ssu.moassubackend.config.oauth.JwtTokenProvider;
-import com.ssu.moassubackend.config.oauth.dto.LoginResultDto;
-import com.ssu.moassubackend.config.oauth.dto.OAuthAttributes;
+import com.ssu.moassubackend.config.security.JwtTokenProvider;
+import com.ssu.moassubackend.config.security.dto.LoginResultDto;
+import com.ssu.moassubackend.config.security.dto.OAuthAttributes;
 import com.ssu.moassubackend.domain.user.User;
 import com.ssu.moassubackend.domain.user.UserRepository;
 import lombok.extern.slf4j.Slf4j;

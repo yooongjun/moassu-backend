@@ -1,6 +1,5 @@
 package com.ssu.moassubackend.domain.user;
 
-import com.ssu.moassubackend.config.oauth.SocialType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

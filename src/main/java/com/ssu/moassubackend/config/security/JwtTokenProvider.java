@@ -1,6 +1,6 @@
-package com.ssu.moassubackend.config.oauth;
+package com.ssu.moassubackend.config.security;
 
-import com.ssu.moassubackend.config.oauth.dto.CustomUserDetails;
+import com.ssu.moassubackend.config.security.dto.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;

@@ -1,4 +1,4 @@
-package com.ssu.moassubackend.config.oauth.dto;
+package com.ssu.moassubackend.config.security.dto;
 
 import lombok.Builder;
 import lombok.Getter;

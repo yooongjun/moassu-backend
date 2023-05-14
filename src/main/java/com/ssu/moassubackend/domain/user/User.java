@@ -1,6 +1,6 @@
 package com.ssu.moassubackend.domain.user;
 
-import com.ssu.moassubackend.config.oauth.SocialType;
+import com.ssu.moassubackend.config.security.SocialType;
 import com.ssu.moassubackend.domain.comment.Comment;
 import com.ssu.moassubackend.domain.common.BaseEntity;
 import com.ssu.moassubackend.domain.subscription.Subscription;

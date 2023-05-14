@@ -1,11 +1,11 @@
-package com.ssu.moassubackend.config.oauth.controller;
+package com.ssu.moassubackend.config.security.controller;
 
 
-import com.ssu.moassubackend.config.oauth.SocialType;
-import com.ssu.moassubackend.config.oauth.dto.LoginResultDto;
-import com.ssu.moassubackend.config.oauth.dto.OAuthAttributes;
-import com.ssu.moassubackend.config.oauth.service.LoginService;
-import com.ssu.moassubackend.config.oauth.service.OAuth2TokenService;
+import com.ssu.moassubackend.config.security.SocialType;
+import com.ssu.moassubackend.config.security.dto.LoginResultDto;
+import com.ssu.moassubackend.config.security.dto.OAuthAttributes;
+import com.ssu.moassubackend.config.security.service.LoginService;
+import com.ssu.moassubackend.config.security.service.OAuth2TokenService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

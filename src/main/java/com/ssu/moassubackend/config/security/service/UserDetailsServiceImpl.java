@@ -1,6 +1,6 @@
-package com.ssu.moassubackend.config.oauth.service;
+package com.ssu.moassubackend.config.security.service;
 
-import com.ssu.moassubackend.config.oauth.dto.CustomUserDetails;
+import com.ssu.moassubackend.config.security.dto.CustomUserDetails;
 import com.ssu.moassubackend.domain.user.User;
 import com.ssu.moassubackend.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -6,7 +6,6 @@ import com.ssu.moassubackend.config.oauth.dto.OAuthAttributes;
 import com.ssu.moassubackend.domain.user.User;
 import com.ssu.moassubackend.domain.user.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

@@ -1,7 +1,7 @@
 package com.ssu.moassubackend.domain.user;
 
-import com.ssu.moassubackend.domain.comment.Comment;
 import com.ssu.moassubackend.config.oauth.SocialType;
+import com.ssu.moassubackend.domain.comment.Comment;
 import com.ssu.moassubackend.domain.common.BaseEntity;
 import com.ssu.moassubackend.domain.subscription.Subscription;
 import jakarta.persistence.*;
@@ -9,7 +9,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.ArrayList;
 import java.util.List;

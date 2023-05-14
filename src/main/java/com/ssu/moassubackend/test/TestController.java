@@ -35,6 +35,10 @@ public class TestController {
         return ResponseEntity.ok(dummy);
     }
 
+    @GetMapping("/user/detail")
+    public ResponseEntity<?> userDetails() {
+        return ResponseEntity.ok("user detail page");
+    }
 
 // 주기적으로 보내기 테스트 코드
 

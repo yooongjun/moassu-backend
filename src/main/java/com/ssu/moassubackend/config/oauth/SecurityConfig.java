@@ -23,7 +23,6 @@ public class SecurityConfig{
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-
     // HttpSecurity 설정
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -37,26 +36,20 @@ public class SecurityConfig{
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)     // JWT로 인증, 인증에서 세션은 사용하지 않음
 
                 .and()
+                // swagger 설정
+                .authorizeHttpRequests().requestMatchers("v3/api-docs/**", "/swagger-resources/**", "/swagger-ui*/**",
+                        "/webjars/**", "/swagger/**").permitAll()
 
-                .authorizeHttpRequests()
-                .requestMatchers("/user/detail/**")
-                .hasRole("USER")
+                .and()
+                // 인증이 필요한 요청
+                .authorizeHttpRequests().requestMatchers("/user/detail/**").authenticated()
 
-                .anyRequest()
-                .permitAll()
+                .anyRequest().permitAll()
 
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
-    }
-
-
-
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web -> web.ignoring()
-                .requestMatchers("v2/api-docs", "/swagger-resources/**", "/swagger-ui.html",
-                        "/webjars/**", "/swagger/**"));
     }
 
 }

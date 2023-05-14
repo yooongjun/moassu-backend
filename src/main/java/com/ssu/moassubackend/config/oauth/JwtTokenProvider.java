@@ -57,7 +57,7 @@ public class JwtTokenProvider {
         log.info("[getAuthentication] 토큰 기반 정보 조회 시작");
         String userName = getUserName(token);
         UserDetails userDetails = new CustomUserDetails(userName);
-        return new UsernamePasswordAuthenticationToken(userDetails, "");
+        return new UsernamePasswordAuthenticationToken(userDetails, "", null);
     }
 
     public String resolveToken(HttpServletRequest request) {
@@ -70,7 +70,7 @@ public class JwtTokenProvider {
             Claims body = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
             return !body.getExpiration().before(new Date());
         } catch (Exception e) {
-            log.error("[validateToken] 에러 발생");
+            log.error("[validateToken] 유효하지 않은 토큰입니다.");
             return false;
         }
 

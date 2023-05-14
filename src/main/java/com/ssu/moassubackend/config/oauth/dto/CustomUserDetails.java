@@ -1,6 +1,5 @@
 package com.ssu.moassubackend.config.oauth.dto;
 
-import com.ssu.moassubackend.domain.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -2,7 +2,6 @@ package com.ssu.moassubackend.config.oauth.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssu.moassubackend.config.oauth.SocialType;
 import com.ssu.moassubackend.config.oauth.dto.OAuthAttributes;
@@ -16,7 +15,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.naming.AuthenticationException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;

@@ -98,6 +98,7 @@ public class OAuth2TokenService {
     }
 
     public OAuthAttributes loadKakao(String accessToken, String refreshToken) {
+        log.info("[loadKaKao] 유저 정보를 불러옵니다.");
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -117,12 +118,15 @@ public class OAuth2TokenService {
         RequestEntity<MultiValueMap<String, String>> requestEntity = new RequestEntity<>(headers, HttpMethod.GET, uri);
 
         // 유저 정보 불러오기
-        ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
+        ResponseEntity<String> responseEntity = null;
+        try {
+            responseEntity = restTemplate.exchange(requestEntity, String.class);
+        } catch (RuntimeException e) {
 
+        }
         // JSON String to Object
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> attributes;
-
         try {
             attributes = objectMapper.readValue(responseEntity.getBody(), HashMap.class);
         } catch (JsonProcessingException e) {

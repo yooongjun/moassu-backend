@@ -41,6 +41,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.python/jython
 	implementation group: 'org.python', name: 'jython', version: '2.7.3'
 
+	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.2'
 

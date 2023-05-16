@@ -2,6 +2,7 @@ package com.ssu.moassubackend.post.service;
 
 import com.ssu.moassubackend.domain.post.Post;
 import com.ssu.moassubackend.domain.post.Unipage;
+import com.ssu.moassubackend.post.image.service.ImageService;
 import com.ssu.moassubackend.post.repository.PostRepository;
 import com.ssu.moassubackend.scrap.dto.HomepageUnivDto;
 import lombok.RequiredArgsConstructor;
@@ -21,30 +22,29 @@ import java.util.Map;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final ImageService imageService;
 
     public void saveHomepageUniv(List<HomepageUnivDto> homepageUnivDtos) {
         for (HomepageUnivDto dto : homepageUnivDtos) {
-            String thumbAttach;
             List<String> attachList = new ArrayList<>();
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
             LocalDate date = convertToLocalDate(dateString);
 
-            // Map -> List 변환
+            // 새로운 Post 저장
+            Post post = new Unipage(dto.getTitle(), dto.getContent(), date, dto.getCategory(), dto.getUrl());
+            Post savedPost = postRepository.save(post);
+
+            // 새로운 Post 의 이미지 리스트 저장
             if(dto.getAttach() != null && !dto.getAttach().isEmpty()) {
                 Map<String, String> attach = dto.getAttach();
-                for (String value : attach.values()) {
-                    attachList.add(value);
+                for (Map.Entry<String, String> entry : attach.entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                    imageService.saveImage(savedPost, key, value);
                 }
             }
-
-            if(attachList != null && !attachList.isEmpty()) {
-                thumbAttach = attachList.get(0);
-            }
-
-            Post post = new Unipage(dto.getTitle(), dto.getContent(), date, dto.getCategory(), dto.getUrl(), dto.getUrl());
-            postRepository.save(post);
 
         }
     }

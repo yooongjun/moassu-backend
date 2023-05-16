@@ -1,6 +1,7 @@
 package com.ssu.moassubackend.domain.post;
 
 import com.ssu.moassubackend.domain.comment.Comment;
+import com.ssu.moassubackend.domain.image.Image;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -36,6 +37,9 @@ public abstract class Post {
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post")
+    private List<Image> images = new ArrayList<>();
 
     public Post(String title, String content, LocalDate write_date, String field) {
         this.title = title;

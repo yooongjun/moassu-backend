@@ -16,15 +16,13 @@ import java.time.LocalDateTime;
 public class Unipage extends Post {
 
     @Column(columnDefinition = "text")
-    private String img_url;
+    private String ssu_link;
 
-    @Column(columnDefinition = "text")
-    private String img_name;
 
-    public Unipage(String title, String content, LocalDate write_date, String field, String img_url, String img_name) {
+
+    public Unipage(String title, String content, LocalDate write_date, String field, String ssu_link) {
         super(title, content, write_date, field);
-        this.img_url = img_url;
-        this.img_name = img_name;
+        this.ssu_link = ssu_link;
     }
 
 }

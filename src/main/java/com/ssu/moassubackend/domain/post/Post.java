@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +22,12 @@ public abstract class Post {
 
     private String title;
 
+    @Column(columnDefinition = "text")
     private String content;
 
     private String major; // 학부 이름
 
-    private LocalDateTime write_date; // 작성일
+    private LocalDate write_date; // 작성일
 
     private String field; // 분야
 
@@ -35,7 +37,7 @@ public abstract class Post {
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 
-    public Post(String title, String content, LocalDateTime write_date, String field) {
+    public Post(String title, String content, LocalDate write_date, String field) {
         this.title = title;
         this.content = content;
         this.write_date = write_date;

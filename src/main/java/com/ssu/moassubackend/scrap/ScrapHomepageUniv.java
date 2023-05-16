@@ -1,7 +1,9 @@
 package com.ssu.moassubackend.scrap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssu.moassubackend.post.service.PostService;
 import com.ssu.moassubackend.scrap.dto.HomepageUnivDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,12 +17,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
+@RequiredArgsConstructor
 @Component
 public class ScrapHomepageUniv {
 
     @Value("classpath:ssufilelist/homepage_univ.json")
     private Resource jsonData;
+
+    private final PostService postService;
 
     //    @Scheduled(fixedDelay = 60000)
     @Scheduled(fixedDelay = 3600000)
@@ -29,6 +33,8 @@ public class ScrapHomepageUniv {
         InputStream inputStream = jsonData.getInputStream();
         HomepageUnivDto[] homepageUnivDtos = objectMapper.readValue(inputStream, HomepageUnivDto[].class);
         List<HomepageUnivDto> homepageUnivList = Arrays.asList(homepageUnivDtos);
+
+        List<HomepageUnivDto> saveList = new ArrayList<>();
 
         for (HomepageUnivDto homepageUnivDto : homepageUnivList) {
             String admin = homepageUnivDto.getAdmin();

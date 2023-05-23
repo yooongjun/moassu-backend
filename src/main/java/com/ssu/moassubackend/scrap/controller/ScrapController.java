@@ -1,5 +1,6 @@
 package com.ssu.moassubackend.scrap.controller;
 
+import com.ssu.moassubackend.scrap.dto.HomepageComDto;
 import com.ssu.moassubackend.scrap.dto.HomepageUnivDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,32 @@ public class ScrapController {
 
             System.out.println("================================");
         }
+    }
+
+    @PostMapping("/savedatacom")
+    public void savedatacom(@RequestBody HomepageComDto[] homepageComDtos) {
+        int cnt = 0;
+        for (HomepageComDto dto : homepageComDtos) {
+            String admin = dto.getAdmin();
+            String url = dto.getUrl();
+            String num = dto.getNum();
+            String date = dto.getDate();
+            String content = dto.getContent();
+            Map<String, String> attach = dto.getAttach();
+            System.out.println("admin = " + admin);
+            System.out.println("url = " + url);
+            System.out.println("num = " + num);
+            System.out.println("date = " + date);
+            System.out.println("content = " + content);
+            for (Map.Entry<String, String> att : attach.entrySet()) {
+                String key = att.getKey();
+                String value = att.getValue();
+                System.out.println("key = " + key);
+                System.out.println("value = " + value);
+            }
+            System.out.println("================================");
+        }
+
     }
 
 }

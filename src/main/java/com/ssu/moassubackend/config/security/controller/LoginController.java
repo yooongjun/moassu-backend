@@ -42,15 +42,13 @@ public class LoginController {
 
         if (loginResultDto.isSuccess()) {
 
-            MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-            headers.add("M-AUTH-TOKEN", loginResultDto.getToken());
-
             ConcurrentHashMap<String, String> body = new ConcurrentHashMap<>();
             body.put("name", loginResultDto.getUserName());
             body.put("msg", loginResultDto.getMsg());
             body.put("email", loginResultDto.getEmail());
+            body.put("token",  loginResultDto.getToken());
 
-            return ResponseEntity.status(HttpStatus.ACCEPTED).headers(new HttpHeaders(headers)).body(body);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(body);
         }
 
         throw new RuntimeException();

@@ -41,11 +41,19 @@ public abstract class Post {
     @OneToMany(mappedBy = "post")
     private List<Image> images = new ArrayList<>();
 
-    public Post(String title, String content, LocalDate write_date, String field) {
+    public Post(String title, String content, LocalDate write_date, String field, String admin) {
         this.title = title;
         this.content = content;
         this.write_date = write_date;
         this.field = field;
+        this.major = admin;
+    }
+
+    public Post(String title, String content, LocalDate write_date, String admin) {
+        this.title = title;
+        this.content = content;
+        this.write_date = write_date;
+        this.major = admin;
     }
 
 }

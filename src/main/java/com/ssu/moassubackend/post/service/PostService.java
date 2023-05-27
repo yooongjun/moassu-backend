@@ -4,6 +4,7 @@ import com.ssu.moassubackend.domain.image.Image;
 import com.ssu.moassubackend.domain.post.Homepage;
 import com.ssu.moassubackend.domain.post.Post;
 import com.ssu.moassubackend.domain.post.Unipage;
+import com.ssu.moassubackend.post.dto.response.HomepageDetailDto;
 import com.ssu.moassubackend.post.dto.response.UnivDetailDto;
 import com.ssu.moassubackend.post.dto.response.UnivListDto;
 import com.ssu.moassubackend.post.image.service.ImageService;
@@ -33,8 +34,52 @@ public class PostService {
     
     public List<UnivListDto> getUnivList(Pageable pageable) {
         List<Post> pages = postRepository.findAll();
-        List<Homepage> homepages = new ArrayList<>();
+        List<Unipage> unipages = new ArrayList<>();
         for (Post post : pages) {
+            if(post instanceof Unipage) {
+                Unipage unipage = (Unipage) post;
+                unipages.add(unipage);
+            }
+        }
+
+        List<UnivListDto> univListDtoList = unipages.stream()
+                .map(page -> new UnivListDto(page))
+                .collect(Collectors.toList());
+
+        return univListDtoList;
+    }
+
+
+
+    public UnivDetailDto detailUnivPost(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("detail exception"));
+
+        if(post instanceof Unipage) {
+            Unipage unipage = (Unipage) post;
+            List<Image> images = unipage.getImages();
+            List<String> urls = images.stream()
+                    .map(img -> img.getImage_url())
+                    .collect(Collectors.toList());
+
+            UnivDetailDto univDetailDto = UnivDetailDto.builder()
+                    .url(unipage.getSsu_link())
+                    .category(unipage.getField())
+                    .content(unipage.getContent())
+                    .title(unipage.getTitle())
+                    .attach(urls)
+                    .build();
+
+            return univDetailDto;
+        }
+
+        return null;
+    }
+
+    public List<UnivListDto> getDepartmentList(Pageable pageable) {
+        List<Post> posts = postRepository.findAll();
+        List<Homepage> homepages = new ArrayList<>();
+        for (Post post : posts) {
             if(post instanceof Homepage) {
                 Homepage homepage = (Homepage) post;
                 homepages.add(homepage);
@@ -48,31 +93,33 @@ public class PostService {
         return univListDtoList;
     }
 
-    public UnivDetailDto detailUnivPost(Long id) {
+
+    public HomepageDetailDto getDepartmentPost(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("detail exception"));
-
         if(post instanceof Homepage) {
             Homepage homepage = (Homepage) post;
             List<Image> images = homepage.getImages();
+
             List<String> urls = images.stream()
                     .map(img -> img.getImage_url())
                     .collect(Collectors.toList());
 
-            UnivDetailDto univDetailDto = UnivDetailDto.builder()
+            HomepageDetailDto detailDto = HomepageDetailDto.builder()
+                    .admin(homepage.getMajor())
+                    .id(homepage.getId())
                     .url(homepage.getSsu_link())
-                    .category(homepage.getField())
+                    .num(homepage.getField())
                     .content(homepage.getContent())
-                    .title(homepage.getTitle())
-                    .attach(homepage.getImages())
+                    .date(homepage.getWrite_date().toString())
+                    .attach(urls)
                     .build();
 
-            return univDetailDto;
+            return detailDto;
         }
 
         return null;
     }
-
     
 
     public void saveHomepageUniv(List<HomepageUnivDto> homepageUnivDtos) {

@@ -1,5 +1,6 @@
 package com.ssu.moassubackend.post;
 
+import com.ssu.moassubackend.post.dto.response.HomepageDetailDto;
 import com.ssu.moassubackend.post.dto.response.UnivDetailDto;
 import com.ssu.moassubackend.post.dto.response.UnivListDto;
 import com.ssu.moassubackend.post.service.PostService;
@@ -32,6 +33,18 @@ public class PostController {
     public ResponseEntity detailUnivPost(@PathVariable("post-id") Long post_id) {
         UnivDetailDto univDetailDto = postService.detailUnivPost(post_id);
         return ResponseEntity.ok(univDetailDto);
+    }
+
+    @GetMapping("/list/department")
+    public ResponseEntity listDepartment(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        List<UnivListDto> departmentList = postService.getDepartmentList(pageable);
+        return ResponseEntity.ok(departmentList);
+    }
+
+    @GetMapping("/department/{post-id}")
+    public ResponseEntity detailDepartmentPost(@PathVariable("post-id") Long post_id) {
+        HomepageDetailDto departmentPost = postService.getDepartmentPost(post_id);
+        return ResponseEntity.ok(departmentPost);
     }
 
 

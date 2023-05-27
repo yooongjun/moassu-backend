@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
-@DiscriminatorValue("insta")
+@DiscriminatorValue("uni")
 @Getter
 public class Unipage extends Post {
 

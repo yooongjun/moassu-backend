@@ -28,7 +28,7 @@ public class ScrapHomepageUniv {
     private final PostRepository postRepository;
 
 //    @Scheduled(fixedDelay = 3600000)
-//    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 60000)
     public void getData() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         InputStream inputStream = jsonData.getInputStream();

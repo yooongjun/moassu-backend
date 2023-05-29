@@ -18,4 +18,4 @@ out/
 application-db.properties
 application-oauth.yml
 application-secret.properties
-
+application-mail.yml

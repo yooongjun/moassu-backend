@@ -2,6 +2,7 @@ package com.ssu.moassubackend.post.dto.response;
 
 import com.ssu.moassubackend.domain.post.Homepage;
 import com.ssu.moassubackend.domain.post.Post;
+import com.ssu.moassubackend.domain.post.Unipage;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,12 @@ public class UnivListDto {
     }
 
 
+    public UnivListDto(Unipage page) {
+        this.category = page.getField();
+        this.title = page.getTitle();
+        this.date = page.getWrite_date();
+        this.link = page.getSsu_link();
+    }
     public UnivListDto(Homepage page) {
         this.category = page.getField();
         this.title = page.getTitle();

@@ -33,7 +33,9 @@ public class PostService {
     private final ImageService imageService;
     
     public List<UnivListDto> getUnivList(Pageable pageable) {
-        List<Post> pages = postRepository.findAll();
+        Page<Post> all = postRepository.findAll(pageable);
+        List<Post> pages = all.getContent();
+
         List<Unipage> unipages = new ArrayList<>();
         for (Post post : pages) {
             if(post instanceof Unipage) {
@@ -77,7 +79,9 @@ public class PostService {
     }
 
     public List<UnivListDto> getDepartmentList(Pageable pageable) {
-        List<Post> posts = postRepository.findAll();
+        Page<Post> all = postRepository.findAll(pageable);
+        List<Post> posts = all.getContent();
+
         List<Homepage> homepages = new ArrayList<>();
         for (Post post : posts) {
             if(post instanceof Homepage) {

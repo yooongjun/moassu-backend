@@ -128,7 +128,7 @@ public class PostService {
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
-            LocalDate date = converToLocalDateComputer(dateString);
+            LocalDate date = convertToLocalDateComputer(dateString);
 
             // 새로운 Post 저장
             Post post = new Unipage(dto.getTitle(), dto.getContent(), date, dto.getCategory(), dto.getUrl());
@@ -244,7 +244,7 @@ public class PostService {
         }
     }
 
-    public LocalDate converToLocalDateComputer(String dateString) {
+    public LocalDate convertToLocalDateComputer(String dateString) {
         // 날짜 형식 지정
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(" yyyy년 M월 d일", Locale.KOREAN);
 

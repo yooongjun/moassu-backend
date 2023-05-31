@@ -57,6 +57,7 @@ public class ScrapController {
                     .content(dto.getContent())
                     .attach(dto.getAttach())
                     .url(dto.getUrl())
+                    .date(dto.getDate())
                     .build();
 
             homepageUnivDtoList.add(univDto);

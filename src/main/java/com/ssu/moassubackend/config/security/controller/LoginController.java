@@ -55,7 +55,7 @@ public class LoginController {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public void exceptionHandler(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/");
+    public ResponseEntity exceptionHandler(HttpServletResponse response) throws IOException {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }

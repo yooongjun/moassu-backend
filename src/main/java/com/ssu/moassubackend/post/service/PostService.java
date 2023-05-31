@@ -128,7 +128,7 @@ public class PostService {
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
-            LocalDate date = convertToLocalDateUniv(dateString);
+            LocalDate date = converToLocalDateComputer(dateString);
 
             // 새로운 Post 저장
             Post post = new Unipage(dto.getTitle(), dto.getContent(), date, dto.getCategory(), dto.getUrl());

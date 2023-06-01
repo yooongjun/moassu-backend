@@ -56,4 +56,15 @@ public abstract class Post {
         this.major = admin;
     }
 
+    public Post(String title, String admin, String category, String content) {
+        this.title = title;
+        this.major = admin;
+        this.field = category;
+        this.content = content;
+    }
+
+    public Post(String major) {
+        this.major = major;
+    }
+
 }

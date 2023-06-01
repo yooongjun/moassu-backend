@@ -45,13 +45,13 @@ public class PostController {
         return ResponseEntity.ok(departmentPost);
     }
 
-    @GetMapping("list/fun")
+    @GetMapping("/list/fun")
     public ResponseEntity listFun(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         List<FunListDto> funList = postService.getFunList(pageable);
         return ResponseEntity.ok(funList);
     }
 
-    @GetMapping("list/insta")
+    @GetMapping("/list/insta")
     public ResponseEntity listInsta(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         List<InstaListDto> instagramList = postService.getInstagramList(pageable);
         return ResponseEntity.ok(instagramList);

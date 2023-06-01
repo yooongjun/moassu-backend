@@ -37,7 +37,7 @@ public class ScrapController {
         for (HomepageUnivDto dto : homepageUnivDtos) {
 
             Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if (postByTitle.isPresent()) break;
+            if (postByTitle.isPresent()) continue;
 
             String url = dto.getUrl();
             String title = dto.getTitle();
@@ -68,7 +68,8 @@ public class ScrapController {
             System.out.println("================================");
         }
 
-        postService.saveHomepageUniv(homepageUnivDtoList);
+        if(homepageUnivDtoList != null && !homepageUnivDtoList.isEmpty())
+            postService.saveHomepageUniv(homepageUnivDtoList);
 
     }
 
@@ -80,7 +81,7 @@ public class ScrapController {
         for (HomepageComDto dto : homepageComDtos) {
 
             Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if (postByTitle.isPresent()) break;
+            if (postByTitle.isPresent()) continue;
 
             String admin = dto.getAdmin();
             String url = dto.getUrl();
@@ -110,7 +111,9 @@ public class ScrapController {
 
         }
 
-        postService.saveHomepageComputer(homepageComDtoList);
+        if(homepageComDtoList != null && !homepageComDtoList.isEmpty())
+            postService.saveHomepageComputer(homepageComDtoList);
+
     }
 
     @PostMapping("/savedata/electronic")
@@ -120,7 +123,7 @@ public class ScrapController {
 
         for (HomepageElecDto dto : homepageElecDtos) {
             Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if (postByTitle.isPresent()) break;
+            if (postByTitle.isPresent()) continue;
 
             HomepageElecDto elecDto = HomepageElecDto.builder()
                     .admin(dto.getAdmin())
@@ -134,7 +137,8 @@ public class ScrapController {
 
         }
 
-        postService.saveHomepageElectronic(homepageElecDtoList);
+        if(homepageElecDtoList != null && !homepageElecDtoList.isEmpty())
+            postService.saveHomepageElectronic(homepageElecDtoList);
 
     }
 
@@ -145,7 +149,7 @@ public class ScrapController {
 
         for (HomepageSoftDto dto : homepageSoftDtos) {
             Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if (postByTitle.isPresent()) break;
+            if (postByTitle.isPresent()) continue;
 
             HomepageSoftDto softDto = HomepageSoftDto.builder()
                     .admin(dto.getAdmin())
@@ -161,7 +165,8 @@ public class ScrapController {
 
         }
 
-        postService.saveHomepageSoftware(homepageSoftDtoList);
+        if(homepageSoftDtoList != null && !homepageSoftDtoList.isEmpty())
+            postService.saveHomepageSoftware(homepageSoftDtoList);
 
     }
 
@@ -173,7 +178,7 @@ public class ScrapController {
         for (HomepageGmDto dto : homepageGmDtos) {
 
             Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if (postByTitle.isPresent()) break;
+            if (postByTitle.isPresent()) continue;
 
 
             HomepageGmDto gmDto = HomepageGmDto.builder()
@@ -189,7 +194,8 @@ public class ScrapController {
             homepageGmDtoList.add(gmDto);
         }
 
-        postService.saveHomepageGm(homepageGmDtoList);
+        if(homepageGmDtoList!= null && !homepageGmDtoList.isEmpty())
+            postService.saveHomepageGm(homepageGmDtoList);
     }
 
     @PostMapping("/savedata/ai")
@@ -199,7 +205,7 @@ public class ScrapController {
 
         for (HomepageAiDto dto : homepageAiDtos) {
             Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if (postByTitle.isPresent()) break;
+            if (postByTitle.isPresent()) continue;
 
             HomepageAiDto aiDto = HomepageAiDto.builder()
                     .admin(dto.getAdmin())
@@ -213,7 +219,8 @@ public class ScrapController {
 
         }
 
-        postService.saveHomepageAI(homepageAiDtoList);
+        if(homepageAiDtoList != null && !homepageAiDtoList.isEmpty())
+            postService.saveHomepageAI(homepageAiDtoList);
     }
 
     @PostMapping("/savedata/fun")
@@ -222,7 +229,7 @@ public class ScrapController {
 
         for (HomepageFunDto dto : homepageFunDtos) {
             Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if(postByTitle.isPresent()) break;
+            if(postByTitle.isPresent()) continue;
 
             HomepageFunDto funDto = HomepageFunDto.builder()
                     .admin(dto.getAdmin())
@@ -238,7 +245,8 @@ public class ScrapController {
 
         }
 
-        postService.saveHomepageFun(homepageFunDtoList);
+        if(homepageFunDtoList != null && !homepageFunDtoList.isEmpty())
+            postService.saveHomepageFun(homepageFunDtoList);
 
     }
 
@@ -249,7 +257,7 @@ public class ScrapController {
 
         for (HomepageInstaDto dto : homepageInstaDtos) {
             Optional<Instagram> InstaByUrl = instagramRepository.findByUrl(dto.getUrl());
-            if(InstaByUrl.isPresent()) break;
+            if(InstaByUrl.isPresent()) continue;
 
             HomepageInstaDto instaDto = HomepageInstaDto.builder()
                     .admin(dto.getAdmin())
@@ -261,7 +269,8 @@ public class ScrapController {
 
         }
 
-        postService.saveHomepageInsta(homepageInstaDtoList);
+        if(homepageInstaDtoList != null && !homepageInstaDtoList.isEmpty())
+            postService.saveHomepageInsta(homepageInstaDtoList);
 
     }
 

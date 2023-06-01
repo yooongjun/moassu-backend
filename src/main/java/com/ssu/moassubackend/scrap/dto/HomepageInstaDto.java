@@ -11,6 +11,8 @@ public class HomepageInstaDto {
     private String url;
     private String img;
 
+    public HomepageInstaDto() {}
+
     @Builder
     public HomepageInstaDto(String admin, String url, String img) {
         this.admin = admin;

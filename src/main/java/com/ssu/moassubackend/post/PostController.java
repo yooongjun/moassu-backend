@@ -1,8 +1,6 @@
 package com.ssu.moassubackend.post;
 
-import com.ssu.moassubackend.post.dto.response.HomepageDetailDto;
-import com.ssu.moassubackend.post.dto.response.UnivDetailDto;
-import com.ssu.moassubackend.post.dto.response.UnivListDto;
+import com.ssu.moassubackend.post.dto.response.*;
 import com.ssu.moassubackend.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,5 +45,16 @@ public class PostController {
         return ResponseEntity.ok(departmentPost);
     }
 
+    @GetMapping("list/fun")
+    public ResponseEntity listFun(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        List<FunListDto> funList = postService.getFunList(pageable);
+        return ResponseEntity.ok(funList);
+    }
+
+    @GetMapping("list/insta")
+    public ResponseEntity listInsta(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        List<InstaListDto> instagramList = postService.getInstagramList(pageable);
+        return ResponseEntity.ok(instagramList);
+    }
 
 }

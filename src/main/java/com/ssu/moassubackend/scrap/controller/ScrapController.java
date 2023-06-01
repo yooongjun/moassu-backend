@@ -1,7 +1,9 @@
 package com.ssu.moassubackend.scrap.controller;
 
+import com.ssu.moassubackend.domain.post.Instagram;
 import com.ssu.moassubackend.domain.post.Post;
 import com.ssu.moassubackend.domain.post.Unipage;
+import com.ssu.moassubackend.post.repository.InstagramRepository;
 import com.ssu.moassubackend.post.repository.PostRepository;
 import com.ssu.moassubackend.post.service.PostService;
 import com.ssu.moassubackend.scrap.dto.*;
@@ -25,6 +27,7 @@ public class ScrapController {
 
     private final PostRepository postRepository;
     private final PostService postService;
+    private final InstagramRepository instagramRepository;
 
     @PostMapping("/savedata/univ")
     public void savedata(@RequestBody HomepageUnivDto[] homepageUnivDtos) {
@@ -213,5 +216,53 @@ public class ScrapController {
         postService.saveHomepageAI(homepageAiDtoList);
     }
 
+    @PostMapping("/savedata/fun")
+    public void savedatafun(@RequestBody HomepageFunDto[] homepageFunDtos) {
+        List<HomepageFunDto> homepageFunDtoList = new ArrayList<>();
+
+        for (HomepageFunDto dto : homepageFunDtos) {
+            Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
+            if(postByTitle.isPresent()) break;
+
+            HomepageFunDto funDto = HomepageFunDto.builder()
+                    .admin(dto.getAdmin())
+                    .url(dto.getUrl())
+                    .category(dto.getCategory())
+                    .title(dto.getTitle())
+                    .content(dto.getContent())
+                    .cover(dto.getCover())
+                    .attach(dto.getAttach())
+                    .build();
+
+            homepageFunDtoList.add(funDto);
+
+        }
+
+        postService.saveHomepageFun(homepageFunDtoList);
+
+    }
+
+    @PostMapping("/savedata/insta")
+    public void savedatainsta(@RequestBody HomepageInstaDto[] homepageInstaDtos) {
+
+        List<HomepageInstaDto> homepageInstaDtoList = new ArrayList<>();
+
+        for (HomepageInstaDto dto : homepageInstaDtos) {
+            Optional<Instagram> InstaByUrl = instagramRepository.findByUrl(dto.getUrl());
+            if(InstaByUrl.isPresent()) break;
+
+            HomepageInstaDto instaDto = HomepageInstaDto.builder()
+                    .admin(dto.getAdmin())
+                    .url(dto.getUrl())
+                    .img(dto.getImg())
+                    .build();
+
+            homepageInstaDtoList.add(instaDto);
+
+        }
+
+        postService.saveHomepageInsta(homepageInstaDtoList);
+
+    }
 
 }

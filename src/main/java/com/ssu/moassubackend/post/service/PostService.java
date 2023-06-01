@@ -1,12 +1,8 @@
 package com.ssu.moassubackend.post.service;
 
 import com.ssu.moassubackend.domain.image.Image;
-import com.ssu.moassubackend.domain.post.Homepage;
-import com.ssu.moassubackend.domain.post.Post;
-import com.ssu.moassubackend.domain.post.Unipage;
-import com.ssu.moassubackend.post.dto.response.HomepageDetailDto;
-import com.ssu.moassubackend.post.dto.response.UnivDetailDto;
-import com.ssu.moassubackend.post.dto.response.UnivListDto;
+import com.ssu.moassubackend.domain.post.*;
+import com.ssu.moassubackend.post.dto.response.*;
 import com.ssu.moassubackend.post.image.service.ImageService;
 import com.ssu.moassubackend.post.repository.PostRepository;
 import com.ssu.moassubackend.scrap.dto.*;
@@ -124,7 +120,46 @@ public class PostService {
 
         return null;
     }
-    
+
+    public List<FunListDto> getFunList(Pageable pageable) {
+        Page<Post> all = postRepository.findAll(pageable);
+        List<Post> posts = all.getContent();
+
+        List<Fun> funs = new ArrayList<>();
+
+        for (Post post : posts) {
+            if(post instanceof Fun) {
+                Fun fun = (Fun) post;
+                funs.add(fun);
+            }
+        }
+
+        List<FunListDto> funListDtoList = funs.stream()
+                .map(page -> new FunListDto(page))
+                .collect(Collectors.toList());
+
+        return funListDtoList;
+    }
+
+    public List<InstaListDto> getInstagramList(Pageable pageable) {
+        Page<Post> all = postRepository.findAll(pageable);
+        List<Post> posts = all.getContent();
+
+        List<Instagram> instagrams = new ArrayList<>();
+        for (Post post : posts) {
+            if(post instanceof Instagram) {
+                Instagram instagram = (Instagram) post;
+                instagrams.add(instagram);
+            }
+        }
+
+        List<InstaListDto> instaListDtoList = instagrams.stream()
+                .map(page -> new InstaListDto(page))
+                .collect(Collectors.toList());
+
+        return instaListDtoList;
+
+    }
 
     public void saveHomepageUniv(List<HomepageUnivDto> homepageUnivDtos) {
         for (HomepageUnivDto dto : homepageUnivDtos) {
@@ -248,6 +283,35 @@ public class PostService {
         }
     }
 
+
+    public void saveHomepageFun(List<HomepageFunDto> homepageFunDtos) {
+        for (HomepageFunDto dto : homepageFunDtos) {
+            List<String> attachList = new ArrayList<>();
+
+            Post post = new Fun(dto.getTitle(), dto.getAdmin(), dto.getUrl(), dto.getCategory(),
+                    dto.getContent(), dto.getCover());
+            Post savedPost = postRepository.save(post);
+
+            // 새로운 Post 의 이미지 리스트 저장
+            if(dto.getAttach() != null && !dto.getAttach().isEmpty()) {
+                Map<String, String> attach = dto.getAttach();
+                for (Map.Entry<String, String> entry : attach.entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                    imageService.saveImage(savedPost, key, value);
+                }
+            }
+        }
+    }
+
+    public void saveHomepageInsta(List<HomepageInstaDto> homepageInstaDtos) {
+        for (HomepageInstaDto dto : homepageInstaDtos) {
+            Post post = new Instagram(dto.getAdmin(), dto.getImg(), dto.getUrl());
+            Post savedPost = postRepository.save(post);
+        }
+    }
+
+
     public LocalDate convertToLocalDateComputer(String dateString) {
         // 날짜 형식 지정
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(" yyyy년 M월 d일", Locale.KOREAN);
@@ -287,6 +351,7 @@ public class PostService {
 
         return date;
     }
+
 
 }
 

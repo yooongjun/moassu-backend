@@ -11,6 +11,7 @@ import java.time.LocalDate;
 
 @Getter @Setter
 public class UnivListDto {
+    private Long id;
     private String category;
     private String title;
     private LocalDate date;
@@ -19,7 +20,8 @@ public class UnivListDto {
     public UnivListDto() {}
 
     @Builder
-    public UnivListDto(String category, String title, LocalDate date, String link) {
+    public UnivListDto(Long id, String category, String title, LocalDate date, String link) {
+        this.id = id;
         this.category = category;
         this.title = title;
         this.date = date;
@@ -28,12 +30,14 @@ public class UnivListDto {
 
 
     public UnivListDto(Unipage page) {
+        this.id = page.getId();
         this.category = page.getField();
         this.title = page.getTitle();
         this.date = page.getWrite_date();
         this.link = page.getSsu_link();
     }
     public UnivListDto(Homepage page) {
+        this.id = page.getId();
         this.category = page.getField();
         this.title = page.getTitle();
         this.date = page.getWrite_date();

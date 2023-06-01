@@ -228,7 +228,7 @@ public class PostService {
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
-            LocalDate date = convertToLocalDateSoft(dateString);
+            LocalDate date = convertToLocalDateSoft2(dateString);
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getNum(), dto.getUrl(), dto.getAdmin());
             Post savedPost = postRepository.save(post);
@@ -345,6 +345,16 @@ public class PostService {
     public LocalDate convertToLocalDateSoft(String dateString) {
         // 날짜 형식 지정
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // 문자열을 LocalDate로 변환
+        LocalDate date = LocalDate.parse(dateString, formatter);
+
+        return date;
+    }
+
+    public LocalDate convertToLocalDateSoft2(String dateString) {
+        // 날짜 형식 지정
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
 
         // 문자열을 LocalDate로 변환
         LocalDate date = LocalDate.parse(dateString, formatter);

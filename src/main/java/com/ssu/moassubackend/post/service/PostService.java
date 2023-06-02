@@ -111,7 +111,7 @@ public class PostService {
                     .url(homepage.getSsu_link())
                     .num(homepage.getField())
                     .content(homepage.getContent())
-                    .date(homepage.getWrite_date().toString())
+                    .date(homepage.getWriteDate().toString())
                     .attach(urls)
                     .build();
 
@@ -167,7 +167,8 @@ public class PostService {
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
-            LocalDate date = convertToLocalDateComputer(dateString);
+//            LocalDate date = convertToLocalDateComputer(dateString);
+            LocalDate date = convertToLocalDateAll(dateString);
 
             // 새로운 Post 저장
             Post post = new Unipage(dto.getTitle(), dto.getContent(), date, dto.getCategory(), dto.getUrl());
@@ -192,7 +193,8 @@ public class PostService {
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
-            LocalDate date = convertToLocalDateUniv(dateString);
+//            LocalDate date = convertToLocalDateUniv(dateString);
+            LocalDate date = convertToLocalDateAll(dateString);
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getNum(), dto.getUrl(), dto.getAdmin());
             Post savedPost = postRepository.save(post);
@@ -215,7 +217,8 @@ public class PostService {
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
-            LocalDate date = convertToLocalDateElec(dateString);
+//            LocalDate date = convertToLocalDateElec(dateString);
+            LocalDate date = convertToLocalDateAll(dateString);
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getAdmin(), dto.getUrl());
             Post savedPost = postRepository.save(post);
@@ -228,7 +231,8 @@ public class PostService {
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
-            LocalDate date = convertToLocalDateSoft2(dateString);
+//            LocalDate date = convertToLocalDateSoft2(dateString);
+            LocalDate date = convertToLocalDateAll(dateString);
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getNum(), dto.getUrl(), dto.getAdmin());
             Post savedPost = postRepository.save(post);
@@ -252,7 +256,8 @@ public class PostService {
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
-            LocalDate date = convertToLocalDateSoft(dateString);
+//            LocalDate date = convertToLocalDateSoft(dateString);
+            LocalDate date = convertToLocalDateAll(dateString);
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getNum(), dto.getUrl(), dto.getAdmin());
             Post savedPost = postRepository.save(post);
@@ -276,7 +281,8 @@ public class PostService {
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
-            LocalDate date = convertToLocalDateUniv(dateString);
+//            LocalDate date = convertToLocalDateUniv(dateString);
+            LocalDate date = convertToLocalDateAll(dateString);
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getAdmin(), dto.getUrl());
             Post savedPost = postRepository.save(post);
@@ -288,8 +294,17 @@ public class PostService {
         for (HomepageFunDto dto : homepageFunDtos) {
             List<String> attachList = new ArrayList<>();
 
+            List<String> applyPeriod = dto.getApplyPeriod();
+            System.out.println("applyPeriod.get(0) = " + applyPeriod.get(0));
+            LocalDate applyStartDate = convertToLocalDateAll(applyPeriod.get(0));
+            LocalDate applyEndDate = convertToLocalDateAll(applyPeriod.get(1));
+
+            List<String> operatePeriod = dto.getOperatePeriod();
+            LocalDate operateStartDate = convertToLocalDateAll(operatePeriod.get(0));
+            LocalDate operateEndDate = convertToLocalDateAll(operatePeriod.get(1));
+
             Post post = new Fun(dto.getTitle(), dto.getAdmin(), dto.getUrl(), dto.getCategory(),
-                    dto.getContent(), dto.getCover());
+                    dto.getContent(), dto.getCover(), applyStartDate, applyEndDate, operateStartDate, operateEndDate);
             Post savedPost = postRepository.save(post);
 
             // 새로운 Post 의 이미지 리스트 저장
@@ -360,6 +375,17 @@ public class PostService {
         LocalDate date = LocalDate.parse(dateString, formatter);
 
         return date;
+    }
+
+    public LocalDate convertToLocalDateAll(String dateString) {
+        // 날짜 형식 지정
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // 문자열을 LocalDate로 변환
+        LocalDate date = LocalDate.parse(dateString, formatter);
+
+        return date;
+
     }
 
 

@@ -14,8 +14,6 @@ import java.time.LocalDate;
 @DiscriminatorValue("fun")
 @Getter
 public class Fun extends Post {
-    private LocalDate recruit_start_date;
-    private LocalDate recruit_end_date;
 
     @Column(columnDefinition = "text")
     private String ssu_link;
@@ -23,9 +21,9 @@ public class Fun extends Post {
     @Column(columnDefinition = "text")
     private String cover;
 
-    public Fun(String title, String admin, String ssu_link, String category,
-               String content, String cover) {
-        super(title, admin, category, content);
+    public Fun(String title, String admin, String ssu_link, String category, String content, String cover,
+               LocalDate applyStartDate, LocalDate applyEndDate, LocalDate operateStartDate, LocalDate operateEndDate) {
+        super(title, admin, category, content, applyStartDate, applyEndDate, operateStartDate, operateEndDate);
         this.ssu_link = ssu_link;
         this.cover = cover;
     }

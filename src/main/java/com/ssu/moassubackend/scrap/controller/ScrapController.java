@@ -239,6 +239,8 @@ public class ScrapController {
                     .content(dto.getContent())
                     .cover(dto.getCover())
                     .attach(dto.getAttach())
+                    .applyPeriod(dto.getApplyPeriod())
+                    .operatePeriod(dto.getOperatePeriod())
                     .build();
 
             homepageFunDtoList.add(funDto);

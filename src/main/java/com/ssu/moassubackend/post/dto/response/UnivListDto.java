@@ -16,16 +16,18 @@ public class UnivListDto {
     private String title;
     private LocalDate date;
     private String link;
+    private String major;
 
     public UnivListDto() {}
 
     @Builder
-    public UnivListDto(Long id, String category, String title, LocalDate date, String link) {
+    public UnivListDto(Long id, String category, String title, LocalDate date, String link, String major) {
         this.id = id;
         this.category = category;
         this.title = title;
         this.date = date;
         this.link = link;
+        this.major = major;
     }
 
 
@@ -33,14 +35,15 @@ public class UnivListDto {
         this.id = page.getId();
         this.category = page.getField();
         this.title = page.getTitle();
-        this.date = page.getWrite_date();
+        this.date = page.getWriteDate();
         this.link = page.getSsu_link();
     }
     public UnivListDto(Homepage page) {
         this.id = page.getId();
         this.category = page.getField();
         this.title = page.getTitle();
-        this.date = page.getWrite_date();
+        this.date = page.getWriteDate();
         this.link = page.getSsu_link();
+        this.major = page.getMajor();
     }
 }

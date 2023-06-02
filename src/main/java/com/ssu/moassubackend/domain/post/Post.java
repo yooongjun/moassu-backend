@@ -28,7 +28,7 @@ public abstract class Post {
 
     private String major; // 학부 이름
 
-    private LocalDate write_date; // 작성일
+    private LocalDate writeDate; // 작성일
 
     private String field; // 분야
 
@@ -41,10 +41,15 @@ public abstract class Post {
     @OneToMany(mappedBy = "post")
     private List<Image> images = new ArrayList<>();
 
+    private LocalDate applyStartDate;
+    private LocalDate applyEndDate;
+    private LocalDate operateStartDate;
+    private LocalDate operateEndDate;
+
     public Post(String title, String content, LocalDate write_date, String field, String admin) {
         this.title = title;
         this.content = content;
-        this.write_date = write_date;
+        this.writeDate = write_date;
         this.field = field;
         this.major = admin;
     }
@@ -52,7 +57,7 @@ public abstract class Post {
     public Post(String title, String content, LocalDate write_date, String admin) {
         this.title = title;
         this.content = content;
-        this.write_date = write_date;
+        this.writeDate = write_date;
         this.major = admin;
     }
 
@@ -65,6 +70,18 @@ public abstract class Post {
 
     public Post(String major) {
         this.major = major;
+    }
+
+    public Post(String title, String admin, String category, String content,
+                LocalDate applyStartDate, LocalDate applyEndDate, LocalDate operateStartDate, LocalDate operateEndDate) {
+        this.title = title;
+        this.major = admin;
+        this.field = category;
+        this.content = content;
+        this.applyStartDate = applyStartDate;
+        this.applyEndDate = applyEndDate;
+        this.operateStartDate = operateStartDate;
+        this.operateEndDate = operateEndDate;
     }
 
 }

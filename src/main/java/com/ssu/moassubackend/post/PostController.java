@@ -22,7 +22,7 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/list/univ")
-    public ResponseEntity listUniv(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity listUniv(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         List<UnivListDto> univList = postService.getUnivList(pageable);
         return ResponseEntity.ok(univList);
     }
@@ -34,7 +34,7 @@ public class PostController {
     }
 
     @GetMapping("/list/department")
-    public ResponseEntity listDepartment(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity listDepartment(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         List<UnivListDto> departmentList = postService.getDepartmentList(pageable);
         return ResponseEntity.ok(departmentList);
     }
@@ -46,13 +46,13 @@ public class PostController {
     }
 
     @GetMapping("/list/fun")
-    public ResponseEntity listFun(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity listFun(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         List<FunListDto> funList = postService.getFunList(pageable);
         return ResponseEntity.ok(funList);
     }
 
     @GetMapping("/list/insta")
-    public ResponseEntity listInsta(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity listInsta(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         List<InstaListDto> instagramList = postService.getInstagramList(pageable);
         return ResponseEntity.ok(instagramList);
     }

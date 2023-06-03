@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,14 @@ public class PostController {
     @GetMapping("/list/univ")
     public ResponseEntity listUniv(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         List<UnivListDto> univList = postService.getUnivList(pageable);
-        return ResponseEntity.ok(univList);
+        String totalPages = postService.getTotalPagesUniv(pageable);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("totalPages", totalPages);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(univList);
+
     }
 
     @GetMapping("/univ/{post-id}")
@@ -36,7 +44,13 @@ public class PostController {
     @GetMapping("/list/department")
     public ResponseEntity listDepartment(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         List<UnivListDto> departmentList = postService.getDepartmentList(pageable);
-        return ResponseEntity.ok(departmentList);
+        String totalPages = postService.getTotalPagesDepartment(pageable);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("totalPages", totalPages);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(departmentList);
     }
 
     @GetMapping("/department/{post-id}")
@@ -48,13 +62,25 @@ public class PostController {
     @GetMapping("/list/fun")
     public ResponseEntity listFun(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         List<FunListDto> funList = postService.getFunList(pageable);
-        return ResponseEntity.ok(funList);
+        String totalPages = postService.getTotalPagesFun(pageable);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("totalPages", totalPages);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(funList);
     }
 
     @GetMapping("/list/insta")
     public ResponseEntity listInsta(@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         List<InstaListDto> instagramList = postService.getInstagramList(pageable);
-        return ResponseEntity.ok(instagramList);
+        String totalPages = postService.getTotalPagesInsta(pageable);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("totalPages", totalPages);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(instagramList);
     }
 
 }

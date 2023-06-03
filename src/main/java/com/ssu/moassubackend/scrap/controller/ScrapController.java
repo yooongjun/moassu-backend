@@ -36,8 +36,8 @@ public class ScrapController {
 
         for (HomepageUnivDto dto : homepageUnivDtos) {
 
-            Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if (postByTitle.isPresent()) continue;
+            List<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
+            if (!postByTitle.isEmpty()) continue;
 
             String url = dto.getUrl();
             String title = dto.getTitle();
@@ -47,9 +47,11 @@ public class ScrapController {
             String category = dto.getCategory();
             Map<String, String> attach = dto.getAttach();
 
-            for (Map.Entry<String, String> att : attach.entrySet()) {
-                String key = att.getKey();
-                String value = att.getValue();
+            if(attach != null && !attach.isEmpty()) {
+                for (Map.Entry<String, String> att : attach.entrySet()) {
+                    String key = att.getKey();
+                    String value = att.getValue();
+                }
             }
 
             HomepageUnivDto univDto = HomepageUnivDto.builder()
@@ -80,8 +82,8 @@ public class ScrapController {
 
         for (HomepageComDto dto : homepageComDtos) {
 
-            Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if (postByTitle.isPresent()) continue;
+            List<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
+            if (!postByTitle.isEmpty()) continue;
 
             String admin = dto.getAdmin();
             String url = dto.getUrl();
@@ -90,9 +92,11 @@ public class ScrapController {
             String content = dto.getContent();
             Map<String, String> attach = dto.getAttach();
 
-            for (Map.Entry<String, String> att : attach.entrySet()) {
-                String key = att.getKey();
-                String value = att.getValue();
+            if(attach != null && !attach.isEmpty()) {
+                for (Map.Entry<String, String> att : attach.entrySet()) {
+                    String key = att.getKey();
+                    String value = att.getValue();
+                }
             }
 
             HomepageComDto comDto = HomepageComDto.builder()
@@ -122,8 +126,9 @@ public class ScrapController {
         List<HomepageElecDto> homepageElecDtoList = new ArrayList<>();
 
         for (HomepageElecDto dto : homepageElecDtos) {
-            Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if (postByTitle.isPresent()) continue;
+
+            List<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
+            if (!postByTitle.isEmpty()) continue;
 
             HomepageElecDto elecDto = HomepageElecDto.builder()
                     .admin(dto.getAdmin())
@@ -148,8 +153,8 @@ public class ScrapController {
         List<HomepageSoftDto> homepageSoftDtoList = new ArrayList<>();
 
         for (HomepageSoftDto dto : homepageSoftDtos) {
-            Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if (postByTitle.isPresent()) continue;
+            List<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
+            if (!postByTitle.isEmpty()) continue;
 
             HomepageSoftDto softDto = HomepageSoftDto.builder()
                     .admin(dto.getAdmin())
@@ -177,8 +182,8 @@ public class ScrapController {
 
         for (HomepageGmDto dto : homepageGmDtos) {
 
-            Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if (postByTitle.isPresent()) continue;
+            List<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
+            if (!postByTitle.isEmpty()) continue;
 
 
             HomepageGmDto gmDto = HomepageGmDto.builder()
@@ -199,13 +204,13 @@ public class ScrapController {
     }
 
     @PostMapping("/savedata/ai")
-    public void savedataelec(@RequestBody HomepageAiDto[] homepageAiDtos) {
+    public void savedataai(@RequestBody HomepageAiDto[] homepageAiDtos) {
 
         List<HomepageAiDto> homepageAiDtoList = new ArrayList<>();
 
         for (HomepageAiDto dto : homepageAiDtos) {
-            Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if (postByTitle.isPresent()) continue;
+            List<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
+            if (!postByTitle.isEmpty()) continue;
 
             HomepageAiDto aiDto = HomepageAiDto.builder()
                     .admin(dto.getAdmin())
@@ -228,8 +233,8 @@ public class ScrapController {
         List<HomepageFunDto> homepageFunDtoList = new ArrayList<>();
 
         for (HomepageFunDto dto : homepageFunDtos) {
-            Optional<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
-            if(postByTitle.isPresent()) continue;
+            List<Post> postByTitle = postRepository.findByTitle(dto.getTitle());
+            if (!postByTitle.isEmpty()) continue;
 
             HomepageFunDto funDto = HomepageFunDto.builder()
                     .admin(dto.getAdmin())

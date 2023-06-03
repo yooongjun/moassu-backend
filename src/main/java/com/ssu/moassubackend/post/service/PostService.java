@@ -4,7 +4,7 @@ import com.ssu.moassubackend.domain.image.Image;
 import com.ssu.moassubackend.domain.post.*;
 import com.ssu.moassubackend.post.dto.response.*;
 import com.ssu.moassubackend.post.image.service.ImageService;
-import com.ssu.moassubackend.post.repository.PostRepository;
+import com.ssu.moassubackend.post.repository.*;
 import com.ssu.moassubackend.scrap.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,18 +27,14 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final ImageService imageService;
+    private final InstagramRepository instagramRepository;
+    private final UnipageRepository unipageRepository;
+    private final FunRepository funRepository;
+    private final HomepageRepository homepageRepository;
     
     public List<UnivListDto> getUnivList(Pageable pageable) {
-        Page<Post> all = postRepository.findAll(pageable);
-        List<Post> pages = all.getContent();
-
-        List<Unipage> unipages = new ArrayList<>();
-        for (Post post : pages) {
-            if(post instanceof Unipage) {
-                Unipage unipage = (Unipage) post;
-                unipages.add(unipage);
-            }
-        }
+        Page<Unipage> all = unipageRepository.findAll(pageable);
+        List<Unipage> unipages = all.getContent();
 
         List<UnivListDto> univListDtoList = unipages.stream()
                 .map(page -> new UnivListDto(page))
@@ -75,16 +71,8 @@ public class PostService {
     }
 
     public List<UnivListDto> getDepartmentList(Pageable pageable) {
-        Page<Post> all = postRepository.findAll(pageable);
-        List<Post> posts = all.getContent();
-
-        List<Homepage> homepages = new ArrayList<>();
-        for (Post post : posts) {
-            if(post instanceof Homepage) {
-                Homepage homepage = (Homepage) post;
-                homepages.add(homepage);
-            }
-        }
+        Page<Homepage> all = homepageRepository.findAll(pageable);
+        List<Homepage> homepages = all.getContent();
 
         List<UnivListDto> univListDtoList = homepages.stream()
                 .map(page -> new UnivListDto(page))
@@ -122,7 +110,7 @@ public class PostService {
     }
 
     public List<FunListDto> getFunList(Pageable pageable) {
-        Page<Post> all = postRepository.findAll(pageable);
+        /*Page<Post> all = postRepository.findAll(pageable);
         List<Post> posts = all.getContent();
 
         List<Fun> funs = new ArrayList<>();
@@ -132,7 +120,9 @@ public class PostService {
                 Fun fun = (Fun) post;
                 funs.add(fun);
             }
-        }
+        }*/
+        Page<Fun> all = funRepository.findAll(pageable);
+        List<Fun> funs = all.getContent();
 
         List<FunListDto> funListDtoList = funs.stream()
                 .map(page -> new FunListDto(page))
@@ -142,16 +132,9 @@ public class PostService {
     }
 
     public List<InstaListDto> getInstagramList(Pageable pageable) {
-        Page<Post> all = postRepository.findAll(pageable);
-        List<Post> posts = all.getContent();
 
-        List<Instagram> instagrams = new ArrayList<>();
-        for (Post post : posts) {
-            if(post instanceof Instagram) {
-                Instagram instagram = (Instagram) post;
-                instagrams.add(instagram);
-            }
-        }
+        Page<Instagram> all = instagramRepository.findAll(pageable);
+        List<Instagram> instagrams = all.getContent();
 
         List<InstaListDto> instaListDtoList = instagrams.stream()
                 .map(page -> new InstaListDto(page))
@@ -193,8 +176,8 @@ public class PostService {
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
-//            LocalDate date = convertToLocalDateUniv(dateString);
-            LocalDate date = convertToLocalDateAll(dateString);
+            LocalDate date = convertToLocalDateUniv(dateString);
+//            LocalDate date = convertToLocalDateAll(dateString);
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getNum(), dto.getUrl(), dto.getAdmin());
             Post savedPost = postRepository.save(post);
@@ -231,8 +214,8 @@ public class PostService {
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
-//            LocalDate date = convertToLocalDateSoft2(dateString);
-            LocalDate date = convertToLocalDateAll(dateString);
+            LocalDate date = convertToLocalDateSoft2(dateString);
+//            LocalDate date = convertToLocalDateAll(dateString);
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getNum(), dto.getUrl(), dto.getAdmin());
             Post savedPost = postRepository.save(post);
@@ -386,6 +369,31 @@ public class PostService {
 
         return date;
 
+    }
+
+    public String getTotalPagesUniv(Pageable pageable) {
+        Page<Unipage> all = unipageRepository.findAll(pageable);
+        int totalPages = all.getTotalPages();
+        String result = Integer.toString(totalPages);
+        return result;
+    }
+    public String getTotalPagesDepartment(Pageable pageable) {
+        Page<Homepage> all = homepageRepository.findAll(pageable);
+        int totalPages = all.getTotalPages();
+        String result = Integer.toString(totalPages);
+        return result;
+    }
+    public String getTotalPagesInsta(Pageable pageable) {
+        Page<Instagram> all = instagramRepository.findAll(pageable);
+        int totalPages = all.getTotalPages();
+        String result = Integer.toString(totalPages);
+        return result;
+    }
+    public String getTotalPagesFun(Pageable pageable) {
+        Page<Fun> all = funRepository.findAll(pageable);
+        int totalPages = all.getTotalPages();
+        String result = Integer.toString(totalPages);
+        return result;
     }
 
 

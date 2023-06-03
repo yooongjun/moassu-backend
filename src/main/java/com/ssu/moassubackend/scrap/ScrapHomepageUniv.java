@@ -39,8 +39,8 @@ public class ScrapHomepageUniv {
 
         for (HomepageUnivDto homepageUnivDto : homepageUnivList) {
 
-            Optional<Post> optPost = postRepository.findByTitle(homepageUnivDto.getTitle());
-            if(optPost.isPresent()) break; // 이미 있는 Post 이면 그만 검사
+//            Optional<Post> optPost = postRepository.findByTitle(homepageUnivDto.getTitle());
+//            if(optPost.isPresent()) break; // 이미 있는 Post 이면 그만 검사
 
             HomepageUnivDto univDto = HomepageUnivDto.builder()
                     .admin(homepageUnivDto.getAdmin())

@@ -176,8 +176,8 @@ public class PostService {
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
-            LocalDate date = convertToLocalDateUniv(dateString);
-//            LocalDate date = convertToLocalDateAll(dateString);
+//            LocalDate date = convertToLocalDateUniv(dateString);
+            LocalDate date = convertToLocalDateAll(dateString);
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getNum(), dto.getUrl(), dto.getAdmin());
             Post savedPost = postRepository.save(post);
@@ -214,8 +214,8 @@ public class PostService {
 
             // String -> LocalDate 변환
             String dateString = dto.getDate();
-            LocalDate date = convertToLocalDateSoft2(dateString);
-//            LocalDate date = convertToLocalDateAll(dateString);
+//            LocalDate date = convertToLocalDateSoft2(dateString);
+            LocalDate date = convertToLocalDateAll(dateString);
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getNum(), dto.getUrl(), dto.getAdmin());
             Post savedPost = postRepository.save(post);
@@ -278,7 +278,7 @@ public class PostService {
             List<String> attachList = new ArrayList<>();
 
             List<String> applyPeriod = dto.getApplyPeriod();
-            System.out.println("applyPeriod.get(0) = " + applyPeriod.get(0));
+//            System.out.println("applyPeriod.get(0) = " + applyPeriod.get(0));
             LocalDate applyStartDate = convertToLocalDateAll(applyPeriod.get(0));
             LocalDate applyEndDate = convertToLocalDateAll(applyPeriod.get(1));
 

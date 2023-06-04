@@ -1,5 +1,6 @@
 package com.ssu.moassubackend.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssu.moassubackend.config.security.SocialType;
 import com.ssu.moassubackend.domain.comment.Comment;
 import com.ssu.moassubackend.domain.common.BaseEntity;
@@ -34,6 +35,7 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private String nickName;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Subscription> subscriptions = new ArrayList<>();
 

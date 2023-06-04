@@ -21,8 +21,7 @@ public class Subscription {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "department_id")
+    @Enumerated(value = EnumType.STRING)
     private Department department;
 
     @Builder

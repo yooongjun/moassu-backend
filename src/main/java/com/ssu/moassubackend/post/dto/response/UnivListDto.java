@@ -33,7 +33,7 @@ public class UnivListDto {
 
     public UnivListDto(Unipage page) {
         this.id = page.getId();
-        this.category = page.getField();
+        this.category = page.getMajor();
         this.title = page.getTitle();
         this.date = page.getWriteDate();
         this.link = page.getSsu_link();

@@ -1,5 +1,6 @@
 package com.ssu.moassubackend.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssu.moassubackend.config.security.SocialType;
 import com.ssu.moassubackend.domain.comment.Comment;
 import com.ssu.moassubackend.domain.common.BaseEntity;
@@ -11,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -34,7 +36,8 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private String nickName;
 
-    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Subscription> subscriptions = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")

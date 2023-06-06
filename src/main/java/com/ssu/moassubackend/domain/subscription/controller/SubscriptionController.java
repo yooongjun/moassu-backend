@@ -26,7 +26,7 @@ public class SubscriptionController {
 
     @PostMapping
     public ResponseEntity saveSubscriptions(@RequestBody SubscribeRequestDto subscribeRequestDto) {
-        subscriptionService.addSubscribe(subscribeRequestDto.getDepartmentList(), subscribeRequestDto.getEmail());
+        subscriptionService.addSubscribe(subscribeRequestDto.getKeywordList(), subscribeRequestDto.getEmail());
 
         return ResponseEntity.ok("Subscribed successfully.");
     }

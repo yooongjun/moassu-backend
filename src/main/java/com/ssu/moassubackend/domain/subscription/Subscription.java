@@ -21,13 +21,12 @@ public class Subscription {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Enumerated(value = EnumType.STRING)
-    private Department department;
+    private String keyword;
 
     @Builder
-    public Subscription(User user, Department department) {
+    public Subscription(User user, String keyword) {
         this.user = user;
-        this.department = department;
+        this.keyword = keyword;
     }
 
 }

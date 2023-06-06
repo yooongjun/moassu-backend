@@ -11,7 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,12 +26,11 @@ public class SubscriptionService {
     public SubscribeResponseDto getSubscriptions(String email) {
 
         User user = userRepository.findByEmail(email).orElseThrow();
-        List<Subscription> subscriptionList = subscriptionRepository.findByUser(user);
+        List<Subscription> userSubscriptions = user.getSubscriptions();
 
-        List<Department> departments = new ArrayList<>();
-        subscriptionList.forEach(subscription -> departments.add(subscription.getDepartment()));
-
-        return new SubscribeResponseDto(departments);
+        return new SubscribeResponseDto(userSubscriptions.stream()
+                .map(subscription -> subscription.getKeyword())
+                .collect(Collectors.toList()));
     }
 
 
@@ -39,21 +40,22 @@ public class SubscriptionService {
         if (subscriptions.isEmpty() || email.isEmpty()) return;
 
         // 유저 조회
+        log.info("email : {}", email);
         User user = userRepository.findByEmail(email).orElseThrow();
-        Long id = user.getId();
 
         // 유저의 구독 리스트 조회
-        List<Subscription> subscriptionList = subscriptionRepository.findByUser(user);
+        List<Subscription> userSubscriptions = user.getSubscriptions();
 
+        // 입력한 Subscriptions 중
         for (String s : subscriptions) {
-            Department department = Department.valueOf(s.toUpperCase());
 
-            if (!subscriptionList.contains(department)) {
-                subscriptionRepository.save(new Subscription(user, department));
-            }
+            if(userSubscriptions.stream().anyMatch(subscription -> subscription.getKeyword().equalsIgnoreCase(s)))
+                continue;
+            Subscription subscription = new Subscription(user, s);
+            subscriptionRepository.save(subscription);
+            userSubscriptions.add(subscription);
         }
     }
-
 
 
 

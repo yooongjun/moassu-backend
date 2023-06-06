@@ -10,13 +10,13 @@ import java.util.List;
 
 // 구독 요청 DTO
 @Data
-@ToString(exclude = "departmentList")
+@ToString(exclude = "keywordList")
 public class SubscribeRequestDto {
-    private List<String> departmentList;
+    private List<String> keywordList;
     private String email;
 
-    public SubscribeRequestDto(List<String> departmentList, String email) {
-        this.departmentList = departmentList;
+    public SubscribeRequestDto(List<String> keywordList, String email) {
+        this.keywordList = keywordList;
         this.email = email;
     }
 

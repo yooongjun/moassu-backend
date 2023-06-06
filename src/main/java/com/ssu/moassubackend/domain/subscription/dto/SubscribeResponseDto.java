@@ -9,9 +9,9 @@ import java.util.List;
 @Data
 public class SubscribeResponseDto {
 
-    private List<Department> subscriptionList;
+    private List<String> subscriptionList;
 
-    public SubscribeResponseDto(List<Department> subscriptionList) {
+    public SubscribeResponseDto(List<String> subscriptionList) {
         this.subscriptionList = subscriptionList;
     }
 

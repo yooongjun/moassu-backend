@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,15 +46,27 @@ public class SubscriptionService {
 
         // 유저의 구독 리스트 조회
         List<Subscription> userSubscriptions = user.getSubscriptions();
+        Iterator<Subscription> iterator = userSubscriptions.iterator();
 
-        // 입력한 Subscriptions 중
-        for (String s : subscriptions) {
+        while (iterator.hasNext()) {
+            Subscription userSubscription = iterator.next();
+            String keyword = userSubscription.getKeyword();
 
-            if(userSubscriptions.stream().anyMatch(subscription -> subscription.getKeyword().equalsIgnoreCase(s)))
-                continue;
-            Subscription subscription = new Subscription(user, s);
-            subscriptionRepository.save(subscription);
-            userSubscriptions.add(subscription);
+            // 기존에 있던 항목은 추가하지 않음
+            if (subscriptions.contains(keyword)) {
+                subscriptions.remove(keyword);
+            } else {
+                // 기존 구독과 일치하지 않는 항목 제거
+                iterator.remove();
+                subscriptionRepository.delete(userSubscription);
+            }
+        }
+
+        // 새로운 항목 추가
+        for (String subscription : subscriptions) {
+            Subscription addSubscription = new Subscription(user, subscription);
+            subscriptionRepository.save(addSubscription);
+            userSubscriptions.add(addSubscription);
         }
     }
 

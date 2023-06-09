@@ -2,6 +2,8 @@ package com.ssu.moassubackend.post.service;
 
 import com.ssu.moassubackend.domain.image.Image;
 import com.ssu.moassubackend.domain.post.*;
+import com.ssu.moassubackend.domain.subscription.dto.SearchParameter;
+import com.ssu.moassubackend.domain.subscription.service.KeywordAlarmService;
 import com.ssu.moassubackend.post.dto.response.*;
 import com.ssu.moassubackend.post.image.service.ImageService;
 import com.ssu.moassubackend.post.repository.*;
@@ -25,13 +27,14 @@ import java.util.stream.Collectors;
 @Transactional
 public class PostService {
 
+    private final KeywordAlarmService alarmService;
     private final PostRepository postRepository;
     private final ImageService imageService;
     private final InstagramRepository instagramRepository;
     private final UnipageRepository unipageRepository;
     private final FunRepository funRepository;
     private final HomepageRepository homepageRepository;
-    
+
     public List<UnivListDto> getUnivList(Pageable pageable) {
         Page<Unipage> all = unipageRepository.findAll(pageable);
         List<Unipage> unipages = all.getContent();
@@ -157,6 +160,12 @@ public class PostService {
             Post post = new Unipage(dto.getTitle(), dto.getContent(), date, dto.getCategory(), dto.getUrl());
             Post savedPost = postRepository.save(post);
 
+            // 알림 발송
+            alarmService.doAlarm(toParameter(dto.getTitle(), dto.getContent(), dto.getAdmin()));
+
+            // 알림 발송
+            alarmService.doAlarm(toParameter(dto.getTitle(), dto.getContent(), dto.getAdmin()));
+
             // 새로운 Post 의 이미지 리스트 저장
             if(dto.getAttach() != null && !dto.getAttach().isEmpty()) {
                 Map<String, String> attach = dto.getAttach();
@@ -166,7 +175,6 @@ public class PostService {
                     imageService.saveImage(savedPost, key, value);
                 }
             }
-
         }
     }
 
@@ -181,6 +189,9 @@ public class PostService {
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getNum(), dto.getUrl(), dto.getAdmin());
             Post savedPost = postRepository.save(post);
+
+            // 알림 발송
+            alarmService.doAlarm(toParameter(dto.getTitle(), dto.getContent(), dto.getAdmin()));
 
             // 새로운 Post 의 이미지 리스트 저장
             if(dto.getAttach() != null && !dto.getAttach().isEmpty()) {
@@ -205,6 +216,9 @@ public class PostService {
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getAdmin(), dto.getUrl());
             Post savedPost = postRepository.save(post);
+
+            // 알림 발송
+            alarmService.doAlarm(toParameter(dto.getTitle(), dto.getContent(), dto.getAdmin()));
         }
     }
 
@@ -219,6 +233,9 @@ public class PostService {
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getNum(), dto.getUrl(), dto.getAdmin());
             Post savedPost = postRepository.save(post);
+
+            // 알림 발송
+            alarmService.doAlarm(toParameter(dto.getTitle(), dto.getContent(), dto.getAdmin()));
 
             // 새로운 Post 의 이미지 리스트 저장
             if(dto.getAttach() != null && !dto.getAttach().isEmpty()) {
@@ -245,6 +262,9 @@ public class PostService {
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getNum(), dto.getUrl(), dto.getAdmin());
             Post savedPost = postRepository.save(post);
 
+            // 알림 발송
+            alarmService.doAlarm(toParameter(dto.getTitle(), dto.getContent(), dto.getAdmin()));
+
             // 새로운 Post 의 이미지 리스트 저장
             if(dto.getAttach() != null && !dto.getAttach().isEmpty()) {
                 Map<String, String> attach = dto.getAttach();
@@ -269,6 +289,9 @@ public class PostService {
 
             Post post = new Homepage(dto.getTitle(), dto.getContent(), date, dto.getAdmin(), dto.getUrl());
             Post savedPost = postRepository.save(post);
+
+            // 알림 발송
+            alarmService.doAlarm(toParameter(dto.getTitle(), dto.getContent(), dto.getAdmin()));
         }
     }
 
@@ -290,6 +313,9 @@ public class PostService {
                     dto.getContent(), dto.getCover(), applyStartDate, applyEndDate, operateStartDate, operateEndDate);
             Post savedPost = postRepository.save(post);
 
+            // 알림 발송
+            alarmService.doAlarm(toParameter(dto.getTitle(), dto.getContent(), dto.getAdmin()));
+
             // 새로운 Post 의 이미지 리스트 저장
             if(dto.getAttach() != null && !dto.getAttach().isEmpty()) {
                 Map<String, String> attach = dto.getAttach();
@@ -306,6 +332,7 @@ public class PostService {
         for (HomepageInstaDto dto : homepageInstaDtos) {
             Post post = new Instagram(dto.getAdmin(), dto.getImg(), dto.getUrl());
             Post savedPost = postRepository.save(post);
+
         }
     }
 
@@ -394,6 +421,10 @@ public class PostService {
         int totalPages = all.getTotalPages();
         String result = Integer.toString(totalPages);
         return result;
+    }
+
+    public SearchParameter toParameter(String title, String content, String admin) {
+        return new SearchParameter(title, content, admin);
     }
 
 

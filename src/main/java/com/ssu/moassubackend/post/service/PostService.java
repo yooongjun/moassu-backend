@@ -330,7 +330,11 @@ public class PostService {
 
     public void saveHomepageInsta(List<HomepageInstaDto> homepageInstaDtos) {
         for (HomepageInstaDto dto : homepageInstaDtos) {
-            Post post = new Instagram(dto.getAdmin(), dto.getImg(), dto.getUrl());
+
+            String dateString = dto.getDate();
+            LocalDate date = convertToLocalDateAll(dateString);
+
+            Post post = new Instagram(dto.getAdmin(), dto.getUrl(), dto.getTitle(), dto.getContent(), date);
             Post savedPost = postRepository.save(post);
 
         }

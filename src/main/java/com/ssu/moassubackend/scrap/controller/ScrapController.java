@@ -269,7 +269,9 @@ public class ScrapController {
             HomepageInstaDto instaDto = HomepageInstaDto.builder()
                     .admin(dto.getAdmin())
                     .url(dto.getUrl())
-                    .img(dto.getImg())
+                    .title(dto.getTitle())
+                    .content(dto.getContent())
+                    .date(dto.getDate())
                     .build();
 
             homepageInstaDtoList.add(instaDto);

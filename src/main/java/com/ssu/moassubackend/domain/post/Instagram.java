@@ -20,9 +20,8 @@ public class Instagram extends Post {
     @Column(columnDefinition = "text")
     private String url;
 
-    public Instagram(String admin, String thumbnail, String url) {
-        super(admin);
-        this.thumbnail = thumbnail;
+    public Instagram(String admin, String url, String title, String content, LocalDate date) {
+        super(title, content, date, admin);
         this.url = url;
     }
 

@@ -9,15 +9,19 @@ public class HomepageInstaDto {
 
     private String admin;
     private String url;
-    private String img;
+    private String title;
+    private String content;
+    private String date;
 
     public HomepageInstaDto() {}
 
     @Builder
-    public HomepageInstaDto(String admin, String url, String img) {
+    public HomepageInstaDto(String admin, String url, String title, String content, String date) {
         this.admin = admin;
         this.url = url;
-        this.img = img;
+        this.title = title;
+        this.content = content;
+        this.date = date;
     }
 
 }

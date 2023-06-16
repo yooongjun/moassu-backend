@@ -163,9 +163,6 @@ public class PostService {
             // 알림 발송
             alarmService.doAlarm(toParameter(dto.getTitle(), dto.getContent(), dto.getAdmin()));
 
-            // 알림 발송
-            alarmService.doAlarm(toParameter(dto.getTitle(), dto.getContent(), dto.getAdmin()));
-
             // 새로운 Post 의 이미지 리스트 저장
             if(dto.getAttach() != null && !dto.getAttach().isEmpty()) {
                 Map<String, String> attach = dto.getAttach();
